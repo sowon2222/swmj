@@ -18,33 +18,20 @@ function showPosition(position){
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
 
-    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`)
-    .then(response => response.json())
-    .then(data => {
-      const location = data.display_name;
-      const city = `${location}`.split(',')[5];
-      weatherByLocation(latitude, longitude);
-    })
-    .catch(error => {
-      console.error('위치 정보 가져오기 실패:', error);
-      document.getElementById("location").innerHTML = "위치 정보를 가져오는 데 문제가 발생했습니다.";
-    });
-
+    weatherByLocation(latitude, longitude);
 }
 
-function weatherByLocation(latitude, longitude) {
+function weatherByLocation(lat, lon) {
     const API_KEY = '1c7f38a00a15ce3d0c88254765240a94';
 
     fetch(
         `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=kr`
-    )
-        .then((response) => {
-            return response.json();
-        })
-        .then((json) => {
-            const description = json.weather[0].description;
-            document.getElementById('description').innerHTML=description;
-        })
+    ).then(response => response.json()).then(data => {
+        document.getElementById('description').innerHTML=data.weather[0].main;
+        if(data.weather[0].main=='Clouds'){
+            bgCloud();
+        }
+    })
 }
 
 
@@ -62,5 +49,5 @@ function bgSun() {
 }
 
 function bgCloud() {
-
+    document.getElementById('bg').style.backgroundColor='gray';
 }
