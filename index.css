@@ -2,7 +2,6 @@
 body {
     margin: 0;
     text-align: center;
-    background-color: rgb(209, 209, 209);
     height: 100vh;
 }
 
@@ -85,4 +84,3 @@ ul {
 .bs {
     width: 100%;
 }
-
